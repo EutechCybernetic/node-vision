@@ -19,6 +19,8 @@ router.post('/classify', function (req, res, next) {
     region: process.env.AWS_REGION
   });
 
+  aws.config.update(config);
+  
   //AWS Rekognition Client
   const client = new aws.Rekognition();
 
@@ -33,6 +35,7 @@ router.post('/classify', function (req, res, next) {
 
   client.detectLabels(params, function (awsError, awsResponse) {
 
+    //Handle errors from AWS service
     if (awsError) {
       console.log(awsError);
 
