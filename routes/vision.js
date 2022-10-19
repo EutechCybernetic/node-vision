@@ -36,8 +36,6 @@ router.post('/classify', async function(req, res, next) {
     console.log(error);
   }
   // Your code ends here //
-
-  
 });
 
 module.exports = router;
