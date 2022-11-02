@@ -1,17 +1,37 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
+const AWS = require("aws-sdk");
+require("dotenv").config();
 
-router.post('/classify', function(req, res, next) {
-  // DON'T return the hardcoded response after implementing the backend
-  let response = ["shoe", "red", "nike"];
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+});
 
-  // Your code starts here //
+const client = new AWS.Rekognition();
 
-  // Your code ends here //
+router.post("/classify", async function (req, res, next) {
+  const params = {
+    Image: {
+      Bytes: req.files.file.data,
+    },
+    MaxLabels: 10,
+  };
 
-  res.json({
-    "labels": response
-  });
+  try {
+    const response = await client.detectLabels(params).promise();
+
+    let arr = { labels: [] };
+
+    for (let index = 0; index < response.Labels.length; index++) {
+      arr.labels[index] = response.Labels[index].Name;
+    }
+
+    res.json(arr);
+  } catch (error) {
+    console.log("error", error);
+  }
 });
 
 module.exports = router;
