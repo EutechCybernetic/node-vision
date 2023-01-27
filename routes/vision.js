@@ -33,6 +33,8 @@ router.post('/classify', function(req, res, next) {
   res.json({
     "labels": response
   });
+    }
 });
+})
 
 module.exports = router;
