@@ -35,6 +35,6 @@ router.post('/classify', function(req, res, next) {
   });
     }
 });
-})
+});
 
 module.exports = router;
