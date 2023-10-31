@@ -6,6 +6,8 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@aws-sdk/client-rekognition": "^3.438.0",
+    "@aws-sdk/credential-providers": "^3.438.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
